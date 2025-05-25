@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class PhotoController extends Controller
 {
-    public function index()
-    {
-        $photos = Photo::latest()->paginate(12);
-        return view('photo', compact('photos'));
-    }
 
     public function storeSingle(Request $request)
     {
@@ -40,18 +35,5 @@ class PhotoController extends Controller
             ]);
         }
         return back()->with('success', 'Multiple Image Uploaded Successfully!');
-    }
-
-    public function delete($id)
-    {
-        $photo = Photo::find($id);
-        if ($photo) {
-            $imagePath = public_path('image/' . $photo->image);
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            }
-            $photo->delete();
-        }
-        return redirect()->back();
     }
 }
